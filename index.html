@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My SPA</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+  <!-- Bootstrap Icons -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    rel="stylesheet"
+  >
+  <!-- SweetAlert2 CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    rel="stylesheet"
+  >
+  <!-- Your custom styles -->
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Fixed Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">🐔 Coop Dashboard</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#coopNavbar"
+        aria-controls="coopNavbar"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="coopNavbar">
+        <ul class="navbar-nav me-auto"></ul>
+        <ul class="navbar-nav">
+          <li class="nav-item me-2">
+            <button class="btn btn-outline-dark" id="nav-login" style="background-color:#8b592bcc;">Sign In</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-dark" id="nav-register">Sign Up</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- All views share this container -->
+  <div class="container pt-5 mt-4">
+
+    <!-- Landing view (before sign-in) -->
+    <div id="landing-view">
+      <!-- Hero / Banner -->
+      <header class="hero text-center py-5" role="banner">
+        <h1 class="display-4">Welcome to Your Smart Chicken Coop</h1>
+        <p class="lead">
+          Real-time monitoring of temperature, humidity, door status, &amp; feed levels.
+        </p>
+        <button id="hero-signup" class="btn btn-lg btn-dark" aria-label="Sign up">
+          Get Started
+        </button>
+      </header>
+
+      <!-- Feature overview cards -->
+      <section id="features" class="py-5">
+        <div class="row g-4">
+          <div class="col-md-3">
+            <div class="feature-card p-4 text-center" role="region" aria-labelledby="f1-title">
+              <i class="bi bi-thermometer-half fs-1"></i>
+              <h3 id="f1-title">Temperature</h3>
+              <p>Auto‐alerts when it’s too hot or cold.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="feature-card p-4 text-center" role="region" aria-labelledby="f2-title">
+              <i class="bi bi-droplet-half fs-1"></i>
+              <h3 id="f2-title">Humidity</h3>
+              <p>Keep the air just right for your flock.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="feature-card p-4 text-center" role="region" aria-labelledby="f3-title">
+              <i class="bi bi-door-open fs-1"></i>
+              <h3 id="f3-title">Door Status</h3>
+              <p>Know exactly when the coop is secured.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="feature-card p-4 text-center" role="region" aria-labelledby="f4-title">
+              <i class="bi bi-bar-chart-line fs-1"></i>
+              <h3 id="f4-title">Feed Level</h3>
+              <p>Never run out of feed again.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Live preview teaser -->
+      <section id="live-preview" class="py-5 text-center">
+        <h2>Live Coop Snapshot</h2>
+        <img
+          id="live-feed"
+          src="ChickenCoopImage.jpeg"
+          alt="Live view of chickens moving in the coop"
+          class="img-fluid rounded shadow-sm"
+          style="max-width: 500px; height: auto;"
+        >
+      </section>      
+
+    <!-- Authentication & Dashboard views -->
+    <div id="login-view" class="d-none"></div>
+    <div id="register-view" class="d-none"></div>
+    <div id="dashboard-view" class="d-none">
+      <div class="row g-4">
+        <!-- Temperature -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card metric-card text-center">
+            <div class="card-body">
+              <h5 class="metric-title">Temperature</h5>
+              <div class="metric-value" id="temp-value">-- °F</div>
+            </div>
+          </div>
+        </div>
+        <!-- Humidity -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card metric-card text-center">
+            <div class="card-body">
+              <h5 class="metric-title">Humidity</h5>
+              <div class="metric-value" id="hum-value">-- %</div>
+            </div>
+          </div>
+        </div>
+        <!-- Door Status -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card metric-card text-center">
+            <div class="card-body">
+              <h5 class="metric-title">Door Status</h5>
+              <div class="metric-value" id="door-value">--</div>
+            </div>
+          </div>
+        </div>
+        <!-- Feed Level -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card metric-card text-center">
+            <div class="card-body">
+              <h5 class="metric-title">Feed Level</h5>
+              <div class="metric-value" id="feed-value">-- %</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-5">
+        <canvas id="activity-chart" height="100"></canvas>
+      </div>
+    </div>
+
+  </div><!-- /.container -->
+
+  <!-- JS Libraries -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <!-- Your behavior -->
+  <script src="js/app.js"></script>
+</body>
+</html>
