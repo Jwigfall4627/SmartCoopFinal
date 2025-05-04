@@ -29,7 +29,8 @@
   <!-- Fixed Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">🐔 Coop Dashboard</a>
+      <!-- somewhere in your <nav>…</nav> -->
+      <a class="navbar-brand" id="nav-dashboard" href="#">🐔 Coop Dashboard</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -351,9 +352,21 @@
       }
 
       function showView(viewId) {
-        $('#landing-view, #signin-view, #signup-view, #dashboard-view').addClass('d-none');
-        $(`#${viewId}`).removeClass('d-none');
-      }
+    // hide all “views” + the resources section
+    $('#landing-view, #signin-view, #signup-view, #dashboard-view, #resources')
+      .addClass('d-none');
+
+    if (viewId === 'dashboard-view') {
+      // when showing dashboard, also reveal the coop controls
+      $('#resources').removeClass('d-none');
+      $('#dashboard-view').removeClass('d-none');
+    } else {
+      // otherwise just show the requested view
+      $(`#${viewId}`).removeClass('d-none');
+    }
+    
+  }
+
 
       // ——— LOAD DASHBOARD DATA ———
       function loadDashboard(sessionID) {
@@ -427,6 +440,67 @@
         });
         // … your register-form handler …
       });
+// ——— COOP CONTROL BUTTON HANDLERS ———
+$('#fan-toggle').on('click', function() {
+  const $btn    = $(this);
+  const $status = $('#fan-status');
+  const isOn    = $status.text() === 'ON';
+
+  // flip state
+  const newState = isOn ? 'OFF' : 'ON';
+  $status
+    .text(newState)
+    .toggleClass('bg-secondary bg-success', true)
+    .removeClass(isOn ? 'bg-success' : 'bg-secondary');
+  $btn.text(isOn ? 'Turn On' : 'Turn Off');
+
+  // (optional) send to backend
+  api('settings.php', 'POST', {
+    SessionID: currentSessionID,
+    fan:       newState
+  }).fail(() => Swal.fire('Error','Could not update fan state','error'));
+});
+
+$('#door-open').on('click', function() {
+  const $open  = $('#door-open');
+  const $close = $('#door-close');
+  $('#door-status')
+    .text('Open')
+    .removeClass('bg-secondary')
+    .addClass('bg-success');
+  $open.prop('disabled', true);
+  $close.prop('disabled', false);
+
+  api('settings.php', 'POST', {
+    SessionID: currentSessionID,
+    door:      'Open'
+  }).fail(() => Swal.fire('Error','Could not open door','error'));
+});
+
+$('#door-close').on('click', function() {
+  const $open  = $('#door-open');
+  const $close = $('#door-close');
+  $('#door-status')
+    .text('Closed')
+    .removeClass('bg-success')
+    .addClass('bg-secondary');
+  $close.prop('disabled', true);
+  $open.prop('disabled', false);
+
+  api('settings.php', 'POST', {
+    SessionID: currentSessionID,
+    door:      'Close'
+  }).fail(() => Swal.fire('Error','Could not close door','error'));
+});
+
+// ——— LIVE CAMERA FEED REFRESH ———
+$('#camera-feed').on('click', function() {
+  const $img = $(this);
+  const base = $img.data('base') || $img.attr('src').split('?')[0];
+  $img.data('base', base);
+  $img.attr('src', base + '?' + new Date().getTime());
+});
+
   </script>
   <script>
   $(function() {
@@ -491,7 +565,14 @@
           // Optional: call loadDashboard() or populate user info
         });
     });
+  // ——— NAV: Coop Dashboard ———
+$('#nav-dashboard').on('click', function(e) {
+  e.preventDefault();        // prevent the default link behavior
+  showView('landing-view');  // jump to your “Welcome to Your Smart Chicken Coop” view
+});
   });
+  
   </script>
+  
 </body>
 </html>
