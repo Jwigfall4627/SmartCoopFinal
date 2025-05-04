@@ -1,30 +1,32 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Smart Chicken Coop Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My SPA</title>
 
   <!-- Bootstrap CSS -->
+
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     rel="stylesheet"
-  />
+  >
   <!-- Bootstrap Icons -->
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     rel="stylesheet"
-  />
+  >
   <!-- SweetAlert2 CSS -->
   <link
     href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
     rel="stylesheet"
-  />
-  <!-- Custom Styles -->
-  <link href="styles.css" rel="stylesheet" />
+  >
+  <!-- Your custom styles -->
+  <link href="styles.css" rel="stylesheet">
 </head>
 <body>
-  <!-- Navbar -->
+  <!-- Fixed Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
     <div class="container">
       <a class="navbar-brand" href="#">🐔 Coop Dashboard</a>
@@ -44,25 +46,23 @@
         <ul class="navbar-nav me-auto"></ul>
         <ul class="navbar-nav">
           <li class="nav-item me-2">
-            <button
-              class="btn btn-outline-dark"
-              id="nav-login"
-              style="background-color:#8b592bcc;"
-            >
-              Sign In
-            </button>
+            <button class="btn btn-outline-dark" id="nav-login" style="background-color:#8b592bcc;" onclick="showView('signin-view')"> Sign In </button>
           </li>
           <li class="nav-item">
-            <button class="btn btn-dark" id="nav-register">Sign Up</button>
+            <button class="btn btn-dark" id="nav-register" onclick="showView('signup-view')"> Sign Up </button>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
+  <!-- All views share this container -->
+
   <div class="container pt-5 mt-4">
-    <!-- Landing -->
+
+    <!-- Landing view (before sign-in) -->
     <div id="landing-view">
+      <!-- Hero / Banner -->
       <header class="hero text-center py-5" role="banner">
         <h1 class="display-4">Welcome to Your Smart Chicken Coop</h1>
         <p class="lead">
@@ -72,341 +72,426 @@
           id="hero-signup"
           class="btn btn-lg btn-dark"
           aria-label="Sign up"
+          onclick="showView('signin-view')"
         >
           Get Started
         </button>
       </header>
-      <!-- Features -->
+
+      <!-- Feature overview cards -->
       <section id="features" class="py-5">
         <div class="row g-4">
-          <!-- ... feature cards ... -->
+          <div class="col-md-3">
+            <div class="feature-card p-4 text-center" role="region" aria-labelledby="f1-title">
+              <i class="bi bi-thermometer-half fs-1"></i>
+              <h3 id="f1-title">Temperature</h3>
+              <p>Auto‐alerts when it’s too hot or cold.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="feature-card p-4 text-center" role="region" aria-labelledby="f2-title">
+              <i class="bi bi-droplet-half fs-1"></i>
+              <h3 id="f2-title">Humidity</h3>
+              <p>Keep the air just right for your flock.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="feature-card p-4 text-center" role="region" aria-labelledby="f3-title">
+              <i class="bi bi-door-open fs-1"></i>
+              <h3 id="f3-title">Door Status</h3>
+              <p>Know exactly when the coop is secured.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="feature-card p-4 text-center" role="region" aria-labelledby="f4-title">
+              <i class="bi bi-bar-chart-line fs-1"></i>
+              <h3 id="f4-title">Feed Level</h3>
+              <p>Never run out of feed again.</p>
+            </div>
+          </div>
         </div>
       </section>
-      <!-- Live Preview -->
+
+      <!-- Live preview teaser -->
       <section id="live-preview" class="py-5 text-center">
         <h2>Live Coop Snapshot</h2>
         <img
+          id="live-feed"
           src="ChickenCoopImage.jpeg"
-          alt="Live coop view"
+          alt="Live view of chickens moving in the coop"
           class="img-fluid rounded shadow-sm"
-          style="max-width:500px;"
-        />
-      </section>
+          style="max-width: 500px; height: auto;"
+        >
+      </section>      
     </div>
 
-    <!-- Sign In -->
+    <!-- Sign In view -->
     <div id="signin-view" class="d-none">
       <div class="row justify-content-center">
         <div class="col-md-5">
           <div class="card p-4 shadow-sm mt-5">
-            <h2 class="text-center mb-4" style="color: var(--coop-brown);">
-              Sign In to Your Coop
-            </h2>
+            <h2 class="text-center mb-4" style="color: var(--coop-brown);">Sign In to Your Coop</h2>
             <form id="login-form">
               <div class="mb-3">
-                <label for="login-email" class="form-label">Email</label>
-                <input
-                  type="email"
-                  id="login-email"
-                  class="form-control"
-                  required
-                />
+                <label for="login-email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="login-email" required />
               </div>
               <div class="mb-3">
                 <label for="login-password" class="form-label">Password</label>
-                <input
-                  type="password"
-                  id="login-password"
-                  class="form-control"
-                  required
-                />
+                <input type="password" class="form-control" id="login-password" required />
               </div>
-              <button
-                type="submit"
-                class="btn w-100"
-                style="background-color: var(--coop-green); color: white;"
-              >
-                Sign In
-              </button>
+              <button type="submit" class="btn w-100" style="background-color: var(--coop-green); color: white;">Sign In</button>
             </form>
-            <p class="text-center mt-3">
-              New here? <a href="#" id="to-signup">Create an account</a>
-            </p>
+            <p class="text-center mt-3">New here? <a href="#" onclick="showView('signup-view')">Create an account</a></p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Sign Up -->
+    <!-- Sign Up view -->
     <div id="signup-view" class="d-none">
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10">
           <div class="card p-4 shadow-sm mt-5">
-            <h2 class="text-center mb-4" style="color: var(--coop-brown);">
-              Create Your Coop Account
-            </h2>
+            <h2 class="text-center mb-4" style="color: var(--coop-brown);">Create Your Coop Account</h2>
             <form id="register-form">
               <div class="row g-3">
-                <!-- First/Last Name -->
                 <div class="col-md-6">
                   <label for="first-name" class="form-label">First Name</label>
-                  <input
-                    type="text"
-                    id="first-name"
-                    class="form-control"
-                    required
-                  />
+                  <input type="text" class="form-control" id="first-name" required />
                 </div>
                 <div class="col-md-6">
                   <label for="last-name" class="form-label">Last Name</label>
-                  <input
-                    type="text"
-                    id="last-name"
-                    class="form-control"
-                    required
-                  />
-                </div>
-                <!-- Contact & Credentials -->
-                <div class="col-md-6">
-                  <label for="reg-email" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    id="reg-email"
-                    class="form-control"
-                    required
-                  />
+                  <input type="text" class="form-control" id="last-name" required />
                 </div>
                 <div class="col-md-6">
-                  <label for="reg-phone" class="form-label">Phone</label>
-                  <input
-                    type="tel"
-                    id="reg-phone"
-                    class="form-control"
-                    required
-                  />
+                  <label for="reg-email" class="form-label">Email Address</label>
+                  <input type="email" class="form-control" id="reg-email" required />
+                </div>
+                <div class="col-md-6">
+                  <label for="reg-phone" class="form-label">Phone Number</label>
+                  <input type="tel" class="form-control" id="reg-phone" required />
                 </div>
                 <div class="col-md-6">
                   <label for="reg-password" class="form-label">Password</label>
-                  <input
-                    type="password"
-                    id="reg-password"
-                    class="form-control"
-                    required
-                  />
+                  <input type="password" class="form-control" id="reg-password" required />
                 </div>
                 <div class="col-md-6">
                   <label for="coop-id" class="form-label">Coop ID</label>
-                  <input
-                    type="text"
-                    id="coop-id"
-                    class="form-control"
-                    required
-                  />
+                  <input type="text" class="form-control" id="coop-id" required />
                 </div>
-                <!-- Address -->
-                <div class="col-12">
+                <div class="col-md-12">
                   <label for="address1" class="form-label">Address Line 1</label>
-                  <input
-                    type="text"
-                    id="address1"
-                    class="form-control"
-                    required
-                  />
+                  <input type="text" class="form-control" id="address1" required />
                 </div>
-                <div class="col-12">
+                <div class="col-md-12">
                   <label for="address2" class="form-label">Address Line 2</label>
-                  <input
-                    type="text"
-                    id="address2"
-                    class="form-control"
-                  />
+                  <input type="text" class="form-control" id="address2" />
                 </div>
                 <div class="col-md-6">
                   <label for="city" class="form-label">City</label>
-                  <input
-                    type="text"
-                    id="city"
-                    class="form-control"
-                    required
-                  />
+                  <input type="text" class="form-control" id="city" required />
                 </div>
                 <div class="col-md-4">
                   <label for="state" class="form-label">State</label>
-                  <input
-                    type="text"
-                    id="state"
-                    class="form-control"
-                    required
-                  />
+                  <input type="text" class="form-control" id="state" required />
                 </div>
                 <div class="col-md-2">
-                  <label for="zip" class="form-label">ZIP</label>
-                  <input
-                    type="text"
-                    id="zip"
-                    class="form-control"
-                    required
-                  />
+                  <label for="zip" class="form-label">Zip</label>
+                  <input type="text" class="form-control" id="zip" required />
                 </div>
                 <div class="col-12 text-center">
-                  <button
-                    type="submit"
-                    class="btn w-50 mt-3"
-                    style="background-color: var(--coop-green); color: white;"
-                  >
-                    Register
-                  </button>
+                  <button type="submit" class="btn w-50 mt-3" style="background-color: var(--coop-green); color: white;">Register</button>
                 </div>
               </div>
             </form>
-            <p class="text-center mt-3">
-              Already have an account? <a href="#" id="to-signin">Sign In</a>
-            </p>
+            <p class="text-center mt-3">Already have an account? <a href="#" onclick="showView('signin-view')">Sign In</a></p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Dashboard -->
-    <div id="dashboard-view" class="d-none">
-      <!-- Cooperative Controls -->
-      <section id="resources" class="py-5">
-        <h3 class="mb-4">Coop Controls & Live Feed</h3>
-        <div class="row g-4">
-          <!-- Fan -->
-          <div class="col-md-4">
-            <div class="card p-3 text-center">
-              <h5>Heater Fan</h5>
-              <button id="fan-toggle" class="btn btn-outline-primary mb-2">Turn On</button>
-              <div>
-                Status: <span id="fan-status" class="badge bg-secondary">OFF</span>
-              </div>
-            </div>
-          </div>
-          <!-- Feeder -->
-          <div class="col-md-4">
-            <div class="card p-3 text-center">
-              <h5>Feeder Level</h5>
-              <div class="progress mb-2">
-                <div
-                  id="feeder-progress"
-                  class="progress-bar bg-success"
-                  role="progressbar"
-                  style="width:100%"
-                >100%</div>
-              </div>
-              <small id="feeder-label">Sufficient</small>
-            </div>
-          </div>
-          <!-- Door -->
-          <div class="col-md-4">
-            <div class="card p-3 text-center">
-              <h5>Chicken Door</h5>
-              <button id="door-open" class="btn btn-success me-2">Open</button>
-              <button id="door-close" class="btn btn-danger">Close</button>
-              <div class="mt-2">
-                Status: <span id="door-status" class="badge bg-secondary">Closed</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row g-4 mt-4">
-          <!-- Camera -->
-          <div class="col-md-6">
-            <div class="card p-3 text-center">
-              <h5>Live Camera Feed</h5>
-              <img
-                id="camera-feed"
-                src="https://placekitten.com/600/350"
-                alt="Live coop camera"
-                class="img-fluid rounded"
-              >
-            </div>
-          </div>
-          <!-- Count -->
-          <div class="col-md-6">
-            <div class="card p-3 text-center">
-              <h5>Chicken Count</h5>
-              <div id="chicken-count" class="display-1">8</div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- Metric Cards -->
+    <!-- Dashboard view -->
+    <section id="resources" class="py-5">
+      <h3 class="mb-4">Coop Controls & Live Feed</h3>
       <div class="row g-4">
-        <!-- Temperature etc... -->
+        <!-- Heater Fan Control -->
+        <div class="col-md-4">
+          <div class="card p-3 text-center">
+            <h5>Heater Fan</h5>
+            <button id="fan-toggle" class="btn btn-outline-primary mb-2">Turn On</button>
+            <div>
+              Status: <span id="fan-status" class="badge bg-secondary">OFF</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feeder Level -->
+        <div class="col-md-4">
+          <div class="card p-3 text-center">
+            <h5>Feeder Level</h5>
+            <div class="progress mb-2">
+              <div
+                id="feeder-progress"
+                class="progress-bar bg-success"
+                role="progressbar"
+                style="width:100%"
+              >100%</div>
+            </div>
+            <small id="feeder-label">Sufficient</small>
+          </div>
+        </div>
+
+        <!-- Door Control -->
+        <div class="col-md-4">
+          <div class="card p-3 text-center">
+            <h5>Chicken Door</h5>
+            <button id="door-open" class="btn btn-success me-2">Open</button>
+            <button id="door-close" class="btn btn-danger">Close</button>
+            <div class="mt-2">
+              Status: <span id="door-status" class="badge bg-secondary">Closed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 mt-4">
+        <!-- Live Camera Feed -->
+        <div class="col-md-6">
+          <div class="card p-3 text-center">
+            <h5>Live Camera Feed</h5>
+            <img
+              id="camera-feed"
+              src="https://placekitten.com/600/350"
+              alt="Live coop camera"
+              class="img-fluid rounded"
+            >
+          </div>
+        </div>
+
+        <!-- Chicken Count -->
+        <div class="col-md-6">
+          <div class="card p-3 text-center">
+            <h5>Chicken Count</h5>
+            <div id="chicken-count" class="display-1">8</div>
+          </div>
+        </div>
+      </div>
+    </section>    
+    <div id="dashboard-view" class="d-none">
+      <div class="row g-4">
+        <!-- Temperature -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card metric-card text-center">
+            <div class="card-body">
+              <h5 class="metric-title">Temperature</h5>
+              <div class="metric-value" id="temp-value">-- °F</div>
+            </div>
+          </div>
+        </div>
+        <!-- Humidity -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card metric-card text-center">
+            <div class="card-body">
+              <h5 class="metric-title">Humidity</h5>
+              <div class="metric-value" id="hum-value">-- %</div>
+            </div>
+          </div>
+        </div>
+        <!-- Door Status -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card metric-card text-center">
+            <div class="card-body">
+              <h5 class="metric-title">Door Status</h5>
+              <div class="metric-value" id="door-value">--</div>
+            </div>
+          </div>
+        </div>
+        <!-- Feed Level -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card metric-card text-center">
+            <div class="card-body">
+              <h5 class="metric-title">Feed Level</h5>
+              <div class="metric-value" id="feed-value">-- %</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-5">
+        <canvas id="activity-chart" height="100"></canvas>
       </div>
     </div>
-  </div>
 
-  <!-- Scripts -->
+  </div><!-- /.container -->
+
+  <!-- JS Libraries -->
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+
+  <!-- Your behavior -->
+
+  </script>
   <script>
-    // View helper
-    function showView(viewId) {
-      $('#landing-view, #signin-view, #signup-view, #dashboard-view')
-        .addClass('d-none');
-      $('#' + viewId).removeClass('d-none');
+      const API_BASE = 'https://simplecoop.swollenhippo.com';
+      let currentSessionID = null;  // ★ store the logged-in user’s session
+
+      function api(endpoint, method, data = {}) {
+        return $.ajax({
+          url: `${API_BASE}/${endpoint}`,
+          method,
+          data,
+          dataType: 'json'
+        });
+      }
+
+      function showView(viewId) {
+        $('#landing-view, #signin-view, #signup-view, #dashboard-view').addClass('d-none');
+        $(`#${viewId}`).removeClass('d-none');
+      }
+
+      // ——— LOAD DASHBOARD DATA ———
+      function loadDashboard(sessionID) {
+        // 1. Environment: get most recent reading
+        api('environment.php', 'GET', { SessionID: sessionID })
+          .done(envLogs => {
+            // assume envLogs is an array sorted by time desc
+            const latest = envLogs[0] || {};
+            $('#temp-value').text(latest.temperature + ' °F');
+            $('#hum-value').text(latest.humidity + ' %');
+          })
+          .fail(() => console.error('Failed fetching environment'));
+
+        // 2. Door status & Feed level (assuming you have endpoints for these)
+        api('settings.php', 'GET', { SessionID: sessionID })
+          .done(settings => {
+            $('#door-value').text(settings.doorStatus);
+            $('#feed-value').text(settings.feedLevel + ' %');
+          })
+          .fail(() => console.error('Failed fetching settings'));
+
+        // 3. Activity chart (e.g. last 24-hr temperature history)
+        api('environment.php', 'GET', { SessionID: sessionID })
+          .done(logs => {
+            // prepare labels & data for Chart.js
+            const labels = logs.map(l => new Date(l.observationDateTime).toLocaleDateString());
+            const data = logs.map(l => +l.temperature);
+            new Chart($('#activity-chart'), {
+              type: 'line',
+              data: { labels, datasets: [{ label: 'Temp (°F)', data }] }
+            });
+          })
+          .fail(() => console.error('Failed fetching chart data'));
+      }
+
+      $(function() {
+        showView('landing-view');
+
+        // ——— SIGN-IN ———
+        $('#signin-view form#login-form').submit(function(e) {
+          e.preventDefault();
+          const payload = {
+            Email:    $('#login-email').val().trim(),
+            Password: $('#login-password').val().trim()
+          };
+
+          api('sessions.php', 'POST', payload)
+            .done(res => {
+              if (res.SessionID) {
+                currentSessionID = res.SessionID;
+                showView('dashboard-view');
+                loadDashboard(currentSessionID);
+              } else {
+                Swal.fire('Sign In Failed', res.Message || 'Invalid credentials', 'error');
+              }
+            })
+            .fail((xhr, status, err) => {
+              console.error('Login error:', status, err, xhr.responseText);
+              Swal.fire('Error', 'Unable to reach server. Try again later.', 'error');
+            });
+        });
+
+        // ——— (Keep your existing SIGN-UP logic below) ———
+        $('#nav-register').on('click', () => {
+          showView('signup-view');
+          api('coop.php', 'POST')
+            .done(res => {
+              if (res.CoopID) $('#coop-id').val(res.CoopID);
+            })
+            .fail(() => Swal.fire('Error','Could not fetch CoopID.','error'));
+        });
+        // … your register-form handler …
+      });
+  </script>
+  <script>
+  $(function() {
+    // Utility to get & set the users array
+    function getUsers() {
+      return JSON.parse(localStorage.getItem('users') || '[]');
     }
-    // User storage
-    function getUsers() { return JSON.parse(localStorage.getItem('users') || '[]'); }
-    function saveUsers(u) { localStorage.setItem('users', JSON.stringify(u)); }
+    function saveUsers(users) {
+      localStorage.setItem('users', JSON.stringify(users));
+    }
 
-    $(function() {
-      // Initial view
-      showView('landing-view');
+    // Show landing on load
+    showView('landing-view');
 
-      // Navbar & Hero actions
-      $('#nav-login, #hero-signup').on('click', () => showView('signin-view'));
-      $('#nav-register').on('click', () => showView('signup-view'));
-      $('#to-signup').on('click', e => { e.preventDefault(); showView('signup-view'); });
-      $('#to-signin').on('click', e => { e.preventDefault(); showView('signin-view'); });
+    // ——— SIGN-UP ———
+    $('#signup-view form#register-form').on('submit', function(e) {
+      e.preventDefault();
+      const newUser = {
+        email:      $('#reg-email').val().trim().toLowerCase(),
+        password:   $('#reg-password').val(),
+        firstName:  $('#first-name').val().trim(),
+        lastName:   $('#last-name').val().trim(),
+        address1:   $('#address1').val().trim(),
+        address2:   $('#address2').val().trim(),
+        city:       $('#city').val().trim(),
+        state:      $('#state').val().trim(),
+        zip:        $('#zip').val().trim(),
+        phone:      $('#reg-phone').val().trim(),
+        coopId:     $('#coop-id').val().trim()
+      };
 
-      // Sign-Up handler
-      $('#signup-view #register-form').submit(function(e) {
-        e.preventDefault();
-        const newUser = {
-          email: $('#reg-email').val().trim().toLowerCase(),
-          password: $('#reg-password').val(),
-          firstName: $('#first-name').val().trim(),
-          lastName: $('#last-name').val().trim(),
-          phone: $('#reg-phone').val().trim(),
-          coopId: $('#coop-id').val().trim(),
-          address1: $('#address1').val().trim(),
-          address2: $('#address2').val().trim(),
-          city: $('#city').val().trim(),
-          state: $('#state').val().trim(),
-          zip: $('#zip').val().trim()
-        };
-        const users = getUsers();
-        if (users.find(u => u.email === newUser.email)) {
-          return Swal.fire('Error', 'Email already registered.', 'error');
-        }
-        users.push(newUser); saveUsers(users);
-        Swal.fire('Success', 'Account created! Please sign in.', 'success')
-          .then(() => showView('signin-view'));
-      });
+      // Check duplicates
+      const users = getUsers();
+      if (users.find(u => u.email === newUser.email)) {
+        return Swal.fire('Oops!', 'That email is already registered.', 'error');
+      }
 
-      // Sign-In handler
-      $('#signin-view #login-form').submit(function(e) {
-        e.preventDefault();
-        const email = $('#login-email').val().trim().toLowerCase();
-        const pwd = $('#login-password').val();
-        const user = getUsers().find(u => u.email === email && u.password === pwd);
-        if (!user) {
-          return Swal.fire('Error', 'Invalid email or password.', 'error');
-        }
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        Swal.fire('Welcome!', `Hello, ${user.firstName}!`, 'success')
-          .then(() => showView('dashboard-view'));
-      });
-
-      // Simulated controls (optional)
-      // ... heater fan, feeder, door, camera, count JS from before ...
+      // Save and advance to sign-in
+      users.push(newUser);
+      saveUsers(users);
+      Swal.fire('Nice!', 'Registration complete. Please sign in.', 'success')
+        .then(() => showView('signin-view'));
     });
+
+    // ——— SIGN-IN ———
+    $('#signin-view form#login-form').on('submit', function(e) {
+      e.preventDefault();
+      const email = $('#login-email').val().trim().toLowerCase();
+      const pwd   = $('#login-password').val();
+      const users = getUsers();
+      const user  = users.find(u => u.email === email && u.password === pwd);
+
+      if (!user) {
+        return Swal.fire('Error', 'Invalid email or password.', 'error');
+      }
+
+      // Store session & jump to dashboard
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      Swal.fire('Welcome back!', `Hello, ${user.firstName}!`, 'success')
+        .then(() => {
+          showView('dashboard-view');
+          // Optional: call loadDashboard() or populate user info
+        });
+    });
+  });
   </script>
 </body>
 </html>
