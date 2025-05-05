@@ -51,3 +51,54 @@
     padding: 1rem;
   }
   
+  /*--------------------------------------
+    Button Styles
+  --------------------------------------*/
+  .btn-coop-brown {
+    background-color: #8B4513; /* SaddleBrown */
+    color: white;
+  }
+
+  .btn-coop-green {
+    background-color: #228B22; /* ForestGreen */
+    color: white;
+  }
+
+  .btn-coop-red {
+    background-color: #B22222; /* FireBrick */
+    color: white;
+  }
+
+  .btn-coop:hover {
+    opacity: 0.9;
+  }
+
+  /*--------------------------------------
+    Heater Fan Control
+  --------------------------------------*/
+  .col-md-4 .card.p-3.text-center h5 {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+
+  #fan-toggle {
+    margin-bottom: 0.5rem;
+  }
+
+  #fan-status {
+    font-size: 0.875rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  /*--------------------------------------
+    Door Control
+  --------------------------------------*/
+  #door-open {
+    margin-right: 0.5rem;
+  }
+
+  #door-status {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    padding: 0.25rem 0.5rem;
+  }

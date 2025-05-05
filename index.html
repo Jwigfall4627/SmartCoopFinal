@@ -1,35 +1,32 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>My SPA</title>
 
   <!-- Bootstrap CSS -->
-
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     rel="stylesheet"
-  >
+  />
   <!-- Bootstrap Icons -->
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     rel="stylesheet"
-  >
+  />
   <!-- SweetAlert2 CSS -->
   <link
     href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
     rel="stylesheet"
-  >
+  />
   <!-- Your custom styles -->
-  <link href="styles.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet" />
 </head>
 <body>
   <!-- Fixed Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
     <div class="container">
-      <!-- somewhere in your <nav>…</nav> -->
       <a class="navbar-brand" id="nav-dashboard" href="#">🐔 Coop Dashboard</a>
       <button
         class="navbar-toggler"
@@ -46,40 +43,57 @@
       <div class="collapse navbar-collapse" id="coopNavbar">
         <ul class="navbar-nav me-auto"></ul>
         <ul class="navbar-nav">
-          <li class="nav-item me-2">
-            <button class="btn btn-outline-dark" id="nav-login" style="background-color:#8b592bcc;" onclick="showView('signin-view')"> Sign In </button>
+          <li class="nav-item me-2" id="nav-login-container">
+            <button
+              class="btn btn-outline-dark"
+              id="nav-login"
+              style="background-color:#8b592bcc;"
+              onclick="showView('signin-view')"
+            >
+              Sign In
+            </button>
           </li>
-          <li class="nav-item">
-            <button class="btn btn-dark" id="nav-register" onclick="showView('signup-view')"> Sign Up </button>
+          <li class="nav-item" id="nav-register-container">
+            <button
+              class="btn btn-dark"
+              id="nav-register"
+              onclick="showView('signup-view')"
+            >
+              Sign Up
+            </button>
+          </li>
+          <li class="nav-item d-none" id="nav-logout-container">
+            <button
+              class="btn btn-danger"
+              id="nav-logout"
+              onclick="logout()"
+            >
+              Sign Out
+            </button>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- All views share this container -->
-
   <div class="container pt-5 mt-4">
-
-    <!-- Landing view (before sign-in) -->
+    <!-- Landing view -->
     <div id="landing-view">
-      <!-- Hero / Banner -->
       <header class="hero text-center py-5" role="banner">
         <h1 class="display-4">Welcome to Your Smart Chicken Coop</h1>
         <p class="lead">
-          Real-time monitoring of temperature, humidity, door status, &amp; feed levels.
+          Real-time monitoring of temperature, humidity, door status, &amp;
+          feed levels.
         </p>
         <button
           id="hero-signup"
           class="btn btn-lg btn-dark"
-          aria-label="Sign up"
           onclick="showView('signin-view')"
         >
           Get Started
         </button>
       </header>
 
-      <!-- Feature overview cards -->
       <section id="features" class="py-5">
         <div class="row g-4">
           <div class="col-md-3">
@@ -122,8 +136,8 @@
           alt="Live view of chickens moving in the coop"
           class="img-fluid rounded shadow-sm"
           style="max-width: 500px; height: auto;"
-        >
-      </section>      
+        />
+      </section>
     </div>
 
     <!-- Sign In view -->
@@ -131,7 +145,9 @@
       <div class="row justify-content-center">
         <div class="col-md-5">
           <div class="card p-4 shadow-sm mt-5">
-            <h2 class="text-center mb-4" style="color: var(--coop-brown);">Sign In to Your Coop</h2>
+            <h2 class="text-center mb-4" style="color: var(--coop-brown);">
+              Sign In to Your Coop
+            </h2>
             <form id="login-form">
               <div class="mb-3">
                 <label for="login-email" class="form-label">Email address</label>
@@ -141,9 +157,18 @@
                 <label for="login-password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="login-password" required />
               </div>
-              <button type="submit" class="btn w-100" style="background-color: var(--coop-green); color: white;">Sign In</button>
+              <button
+                type="submit"
+                class="btn w-100"
+                style="background-color: var(--coop-green); color: white;"
+              >
+                Sign In
+              </button>
             </form>
-            <p class="text-center mt-3">New here? <a href="#" onclick="showView('signup-view')">Create an account</a></p>
+            <p class="text-center mt-3">
+              New here?
+              <a href="#" onclick="showView('signup-view')">Create an account</a>
+            </p>
           </div>
         </div>
       </div>
@@ -154,7 +179,9 @@
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10">
           <div class="card p-4 shadow-sm mt-5">
-            <h2 class="text-center mb-4" style="color: var(--coop-brown);">Create Your Coop Account</h2>
+            <h2 class="text-center mb-4" style="color: var(--coop-brown);">
+              Create Your Coop Account
+            </h2>
             <form id="register-form">
               <div class="row g-3">
                 <div class="col-md-6">
@@ -202,17 +229,35 @@
                   <input type="text" class="form-control" id="zip" required />
                 </div>
                 <div class="col-12 text-center">
-                  <button type="submit" class="btn w-50 mt-3" style="background-color: var(--coop-green); color: white;">Register</button>
+                  <button
+                    type="submit"
+                    class="btn w-50 mt-3"
+                    style="background-color: var(--coop-green); color: white;"
+                  >
+                    Register
+                  </button>
+                </div>
+                <div class="col-12 text-center mt-2">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary w-50"
+                    onclick="showView('signin-view')"
+                  >
+                    Cancel
+                  </button>
                 </div>
               </div>
             </form>
-            <p class="text-center mt-3">Already have an account? <a href="#" onclick="showView('signin-view')">Sign In</a></p>
+            <p class="text-center mt-3">
+              Already have an account?
+              <a href="#" onclick="showView('signin-view')">Sign In</a>
+            </p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Dashboard view -->
+    <!-- Dashboard & controls -->
     <section id="resources" class="py-5">
       <h3 class="mb-4">Coop Controls & Live Feed</h3>
       <div class="row g-4">
@@ -220,13 +265,14 @@
         <div class="col-md-4">
           <div class="card p-3 text-center">
             <h5>Heater Fan</h5>
-            <button id="fan-toggle" class="btn btn-outline-primary mb-2">Turn On</button>
+            <button id="fan-toggle" class="btn btn-coop-brown mb-2">
+              Turn On
+            </button>
             <div>
               Status: <span id="fan-status" class="badge bg-secondary">OFF</span>
             </div>
           </div>
         </div>
-
         <!-- Feeder Level -->
         <div class="col-md-4">
           <div class="card p-3 text-center">
@@ -237,18 +283,23 @@
                 class="progress-bar bg-success"
                 role="progressbar"
                 style="width:100%"
-              >100%</div>
+              >
+                100%
+              </div>
             </div>
             <small id="feeder-label">Sufficient</small>
           </div>
         </div>
-
         <!-- Door Control -->
         <div class="col-md-4">
           <div class="card p-3 text-center">
             <h5>Chicken Door</h5>
-            <button id="door-open" class="btn btn-success me-2">Open</button>
-            <button id="door-close" class="btn btn-danger">Close</button>
+            <button id="door-open" class="btn btn-coop-green me-2">
+              Open
+            </button>
+            <button id="door-close" class="btn btn-coop-red">
+              Close
+            </button>
             <div class="mt-2">
               Status: <span id="door-status" class="badge bg-secondary">Closed</span>
             </div>
@@ -261,15 +312,19 @@
         <div class="col-md-6">
           <div class="card p-3 text-center">
             <h5>Live Camera Feed</h5>
-            <img
+            <iframe
               id="camera-feed"
-              src="https://placekitten.com/600/350"
-              alt="Live coop camera"
-              class="img-fluid rounded"
-            >
+              src="https://www.youtube.com/embed/dUs4JqnWixw"
+              title="Live Chicken Coop Camera"
+              width="100%"
+              height="315"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="rounded"
+            ></iframe>
           </div>
         </div>
-
         <!-- Chicken Count -->
         <div class="col-md-6">
           <div class="card p-3 text-center">
@@ -278,19 +333,43 @@
           </div>
         </div>
       </div>
-    </section>    
+
+      <div class="row g-4 mt-4">
+        <!-- Temperature Control -->
+        <div class="col-md-6">
+          <div class="card p-3 text-center">
+            <h5>Temperature Control</h5>
+            <input
+              type="range"
+              id="temp-slider"
+              class="form-range"
+              min="30"
+              max="120"
+              step="1"
+              value="75"
+              oninput="updateTemperature(this.value)"
+            />
+            <div class="mt-2">
+              <span>Set Temperature: </span>
+              <span id="temp-set-value">75</span> °F
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <div id="dashboard-view" class="d-none">
       <div class="row g-4">
-        <!-- Temperature -->
+        <!-- Temperature Metric -->
         <div class="col-sm-6 col-lg-3">
           <div class="card metric-card text-center">
             <div class="card-body">
               <h5 class="metric-title">Temperature</h5>
-              <div class="metric-value" id="temp-value">-- °F</div>
+              <div class="metric-value" id="temp-value">75 °F</div>
             </div>
           </div>
         </div>
-        <!-- Humidity -->
+        <!-- Humidity Metric -->
         <div class="col-sm-6 col-lg-3">
           <div class="card metric-card text-center">
             <div class="card-body">
@@ -318,193 +397,30 @@
           </div>
         </div>
       </div>
-      <div class="mt-5">
-        <canvas id="activity-chart" height="100"></canvas>
-      </div>
     </div>
-
-  </div><!-- /.container -->
+  </div>
 
   <!-- JS Libraries -->
-
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 
-  <!-- Your behavior -->
-
-  </script>
+  <!-- Consolidated behavior script with fan & door alerts -->
   <script>
-      const API_BASE = 'https://simplecoop.swollenhippo.com';
-      let currentSessionID = null;  // ★ store the logged-in user’s session
+    const API_BASE = 'https://simplecoop.swollenhippo.com';
+    let currentSessionID = null;
 
-      function api(endpoint, method, data = {}) {
-        return $.ajax({
-          url: `${API_BASE}/${endpoint}`,
-          method,
-          data,
-          dataType: 'json'
-        });
+    function showView(viewId) {
+      $('#landing-view, #signin-view, #signup-view, #dashboard-view, #resources')
+        .addClass('d-none');
+      if (viewId === 'dashboard-view') {
+        $('#resources, #dashboard-view').removeClass('d-none');
+      } else {
+        $(`#${viewId}`).removeClass('d-none');
       }
-
-      function showView(viewId) {
-    // hide all “views” + the resources section
-    $('#landing-view, #signin-view, #signup-view, #dashboard-view, #resources')
-      .addClass('d-none');
-
-    if (viewId === 'dashboard-view') {
-      // when showing dashboard, also reveal the coop controls
-      $('#resources').removeClass('d-none');
-      $('#dashboard-view').removeClass('d-none');
-    } else {
-      // otherwise just show the requested view
-      $(`#${viewId}`).removeClass('d-none');
     }
-    
-  }
 
-
-      // ——— LOAD DASHBOARD DATA ———
-      function loadDashboard(sessionID) {
-        // 1. Environment: get most recent reading
-        api('environment.php', 'GET', { SessionID: sessionID })
-          .done(envLogs => {
-            // assume envLogs is an array sorted by time desc
-            const latest = envLogs[0] || {};
-            $('#temp-value').text(latest.temperature + ' °F');
-            $('#hum-value').text(latest.humidity + ' %');
-          })
-          .fail(() => console.error('Failed fetching environment'));
-
-        // 2. Door status & Feed level (assuming you have endpoints for these)
-        api('settings.php', 'GET', { SessionID: sessionID })
-          .done(settings => {
-            $('#door-value').text(settings.doorStatus);
-            $('#feed-value').text(settings.feedLevel + ' %');
-          })
-          .fail(() => console.error('Failed fetching settings'));
-
-        // 3. Activity chart (e.g. last 24-hr temperature history)
-        api('environment.php', 'GET', { SessionID: sessionID })
-          .done(logs => {
-            // prepare labels & data for Chart.js
-            const labels = logs.map(l => new Date(l.observationDateTime).toLocaleDateString());
-            const data = logs.map(l => +l.temperature);
-            new Chart($('#activity-chart'), {
-              type: 'line',
-              data: { labels, datasets: [{ label: 'Temp (°F)', data }] }
-            });
-          })
-          .fail(() => console.error('Failed fetching chart data'));
-      }
-
-      $(function() {
-        showView('landing-view');
-
-        // ——— SIGN-IN ———
-        $('#signin-view form#login-form').submit(function(e) {
-          e.preventDefault();
-          const payload = {
-            Email:    $('#login-email').val().trim(),
-            Password: $('#login-password').val().trim()
-          };
-
-          api('sessions.php', 'POST', payload)
-            .done(res => {
-              if (res.SessionID) {
-                currentSessionID = res.SessionID;
-                showView('dashboard-view');
-                loadDashboard(currentSessionID);
-              } else {
-                Swal.fire('Sign In Failed', res.Message || 'Invalid credentials', 'error');
-              }
-            })
-            .fail((xhr, status, err) => {
-              console.error('Login error:', status, err, xhr.responseText);
-              Swal.fire('Error', 'Unable to reach server. Try again later.', 'error');
-            });
-        });
-
-        // ——— (Keep your existing SIGN-UP logic below) ———
-        $('#nav-register').on('click', () => {
-          showView('signup-view');
-          api('coop.php', 'POST')
-            .done(res => {
-              if (res.CoopID) $('#coop-id').val(res.CoopID);
-            })
-            .fail(() => Swal.fire('Error','Could not fetch CoopID.','error'));
-        });
-        // … your register-form handler …
-      });
-// ——— COOP CONTROL BUTTON HANDLERS ———
-$('#fan-toggle').on('click', function() {
-  const $btn    = $(this);
-  const $status = $('#fan-status');
-  const isOn    = $status.text() === 'ON';
-
-  // flip state
-  const newState = isOn ? 'OFF' : 'ON';
-  $status
-    .text(newState)
-    .toggleClass('bg-secondary bg-success', true)
-    .removeClass(isOn ? 'bg-success' : 'bg-secondary');
-  $btn.text(isOn ? 'Turn On' : 'Turn Off');
-
-  // (optional) send to backend
-  api('settings.php', 'POST', {
-    SessionID: currentSessionID,
-    fan:       newState
-  }).fail(() => Swal.fire('Error','Could not update fan state','error'));
-});
-
-$('#door-open').on('click', function() {
-  const $open  = $('#door-open');
-  const $close = $('#door-close');
-  $('#door-status')
-    .text('Open')
-    .removeClass('bg-secondary')
-    .addClass('bg-success');
-  $open.prop('disabled', true);
-  $close.prop('disabled', false);
-
-  api('settings.php', 'POST', {
-    SessionID: currentSessionID,
-    door:      'Open'
-  }).fail(() => Swal.fire('Error','Could not open door','error'));
-});
-
-$('#door-close').on('click', function() {
-  const $open  = $('#door-open');
-  const $close = $('#door-close');
-  $('#door-status')
-    .text('Closed')
-    .removeClass('bg-success')
-    .addClass('bg-secondary');
-  $close.prop('disabled', true);
-  $open.prop('disabled', false);
-
-  api('settings.php', 'POST', {
-    SessionID: currentSessionID,
-    door:      'Close'
-  }).fail(() => Swal.fire('Error','Could not close door','error'));
-});
-
-// ——— LIVE CAMERA FEED REFRESH ———
-$('#camera-feed').on('click', function() {
-  const $img = $(this);
-  const base = $img.data('base') || $img.attr('src').split('?')[0];
-  $img.data('base', base);
-  $img.attr('src', base + '?' + new Date().getTime());
-});
-
-  </script>
-  <script>
-  $(function() {
-    // Utility to get & set the users array
     function getUsers() {
       return JSON.parse(localStorage.getItem('users') || '[]');
     }
@@ -512,67 +428,255 @@ $('#camera-feed').on('click', function() {
       localStorage.setItem('users', JSON.stringify(users));
     }
 
-    // Show landing on load
-    showView('landing-view');
-
-    // ——— SIGN-UP ———
-    $('#signup-view form#register-form').on('submit', function(e) {
-      e.preventDefault();
-      const newUser = {
-        email:      $('#reg-email').val().trim().toLowerCase(),
-        password:   $('#reg-password').val(),
-        firstName:  $('#first-name').val().trim(),
-        lastName:   $('#last-name').val().trim(),
-        address1:   $('#address1').val().trim(),
-        address2:   $('#address2').val().trim(),
-        city:       $('#city').val().trim(),
-        state:      $('#state').val().trim(),
-        zip:        $('#zip').val().trim(),
-        phone:      $('#reg-phone').val().trim(),
-        coopId:     $('#coop-id').val().trim()
-      };
-
-      // Check duplicates
-      const users = getUsers();
-      if (users.find(u => u.email === newUser.email)) {
-        return Swal.fire('Oops!', 'That email is already registered.', 'error');
-      }
-
-      // Save and advance to sign-in
-      users.push(newUser);
-      saveUsers(users);
-      Swal.fire('Nice!', 'Registration complete. Please sign in.', 'success')
-        .then(() => showView('signin-view'));
-    });
-
-    // ——— SIGN-IN ———
-    $('#signin-view form#login-form').on('submit', function(e) {
-      e.preventDefault();
-      const email = $('#login-email').val().trim().toLowerCase();
-      const pwd   = $('#login-password').val();
-      const users = getUsers();
-      const user  = users.find(u => u.email === email && u.password === pwd);
-
-      if (!user) {
-        return Swal.fire('Error', 'Invalid email or password.', 'error');
-      }
-
-      // Store session & jump to dashboard
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      Swal.fire('Welcome back!', `Hello, ${user.firstName}!`, 'success')
-        .then(() => {
-          showView('dashboard-view');
-          // Optional: call loadDashboard() or populate user info
+    function loadDashboard(sessionID) {
+      api('environment.php', 'GET', { SessionID: sessionID })
+        .done(envLogs => {
+          const latest = envLogs[0] || {};
+          $('#temp-value').text(latest.temperature + ' °F');
+          $('#hum-value').text(latest.humidity + ' %');
         });
+      api('settings.php', 'GET', { SessionID: sessionID })
+        .done(settings => {
+          $('#door-value').text(settings.doorStatus);
+          $('#feed-value').text(settings.feedLevel + ' %');
+        });
+      api('environment.php', 'GET', { SessionID: sessionID })
+        .done(logs => {
+          const labels = logs.map(l =>
+            new Date(l.observationDateTime).toLocaleDateString()
+          );
+          const data = logs.map(l => +l.temperature);
+          new Chart($('#activity-chart'), {
+            type: 'line',
+            data: { labels, datasets: [{ label: 'Temp (°F)', data }] }
+          });
+        });
+    }
+
+    function api(endpoint, method, data = {}) {
+      return $.ajax({
+        url: `${API_BASE}/${endpoint}`,
+        method,
+        data,
+        dataType: 'json'
+      });
+    }
+
+    function updateFeederLevel(level) {
+      const $progressBar = $('#feeder-progress');
+      const $label = $('#feeder-label');
+      const $feedValue = $('#feed-value'); // Feed Level metric title
+
+      // Ensure the level is within the range of 0 to 100
+      level = Math.max(0, Math.min(100, level));
+
+      // Update the progress bar width and color
+      $progressBar
+        .css('width', `${level}%`)
+        .removeClass('bg-success bg-warning bg-danger')
+        .addClass(level > 50 ? 'bg-success' : level > 20 ? 'bg-warning' : 'bg-danger');
+
+      // Update the label text
+      $label.text(level > 50 ? 'Sufficient' : level > 20 ? 'Low' : 'Critical');
+
+      // Update the percentage text inside the progress bar
+      $progressBar.text(`${level}%`);
+
+      // Update the Feed Level metric title
+      $feedValue.text(`${level}%`);
+    }
+
+    function updateTemperature(value) {
+      const $tempSetValue = $('#temp-set-value'); // Displayed set temperature value
+      const $tempValue = $('#temp-value'); // Temperature metric title
+
+      // Update the displayed set temperature
+      $tempSetValue.text(value);
+
+      // Update the temperature metric title
+      $tempValue.text(`${value} °F`);
+
+      // Update humidity based on the new temperature
+      updateHumidity(value);
+    }
+
+    function updateHumidity(temperature) {
+      const $humValue = $('#hum-value'); // Humidity metric title
+
+      // Simulate humidity based on temperature (example logic)
+      let humidity = Math.max(0, Math.min(100, 100 - (temperature - 30) * 0.5));
+
+      // Update the humidity metric title
+      $humValue.text(`${humidity.toFixed(1)} %`);
+    }
+
+    function logout() {
+      // Clear session data
+      localStorage.removeItem('currentUser');
+      currentSessionID = null;
+
+      // Redirect to the landing view
+      showView('landing-view');
+
+      // Update the navbar
+      $('#nav-login-container').removeClass('d-none');
+      $('#nav-register-container').removeClass('d-none');
+      $('#nav-logout-container').addClass('d-none');
+    }
+
+    $(function() {
+      showView('landing-view');
+
+      // NAV: landing
+      $('#nav-dashboard').on('click', e => {
+        e.preventDefault();
+        showView('landing-view');
+      });
+
+      // FETCH new CoopID
+      $('#nav-register').on('click', () => {
+        showView('signup-view');
+        api('coop.php', 'POST')
+          .done(res => { if (res.CoopID) $('#coop-id').val(res.CoopID); })
+          .fail(() => Swal.fire('Error','Could not fetch CoopID.','error'));
+      });
+
+      // SIGN-UP
+      $('#signup-view #register-form').on('submit', function(e) {
+        e.preventDefault();
+        const newUser = {
+          email: $('#reg-email').val().trim().toLowerCase(),
+          password: $('#reg-password').val(),
+          firstName: $('#first-name').val().trim(),
+          lastName: $('#last-name').val().trim(),
+          address1: $('#address1').val().trim(),
+          address2: $('#address2').val().trim(),
+          city: $('#city').val().trim(),
+          state: $('#state').val().trim(),
+          zip: $('#zip').val().trim(),
+          phone: $('#reg-phone').val().trim(),
+          coopId: $('#coop-id').val().trim()
+        };
+        const users = getUsers();
+        if (users.find(u => u.email === newUser.email)) {
+          return Swal.fire('Oops!','That email is already registered.','error');
+        }
+        users.push(newUser);
+        saveUsers(users);
+        Swal.fire('Nice!','Registration complete. Please sign in.','success')
+          .then(() => showView('signin-view'));
+      });
+
+      // SIGN-IN
+      $('#signin-view #login-form').on('submit', function(e) {
+        e.preventDefault();
+        const email = $('#login-email').val().trim().toLowerCase();
+        const pwd = $('#login-password').val();
+        const users = getUsers();
+        const user = users.find(u => u.email === email && u.password === pwd);
+        if (!user) {
+          return Swal.fire('Error', 'Invalid email or password.', 'error');
+        }
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        Swal.fire('Welcome back!', `Hello, ${user.firstName}!`, 'success')
+          .then(() => {
+            showView('dashboard-view');
+
+            // Update the navbar
+            $('#nav-login-container').addClass('d-none');
+            $('#nav-register-container').addClass('d-none');
+            $('#nav-logout-container').removeClass('d-none');
+          });
+      });
+
+      // HEATER FAN
+      $('#fan-toggle').on('click', function() {
+        const $btn = $(this);
+        const $status = $('#fan-status');
+        const isOn = $status.text() === 'ON';
+        const newState = isOn ? 'OFF' : 'ON';
+
+        // Update UI immediately
+        $status
+          .text(newState)
+          .removeClass(isOn ? 'bg-success' : 'bg-secondary')
+          .addClass(isOn ? 'bg-secondary' : 'bg-success');
+        $btn.text(isOn ? 'Turn On' : 'Turn Off');
+
+        // Display SweetAlert based on the new state
+        Swal.fire({
+          icon: newState === 'ON' ? 'success' : 'info',
+          title: `Fan turned ${newState}`,
+          text: newState === 'ON' ? 'The heater fan is now running.' : 'The heater fan has been turned off.',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      });
+
+      // DOOR OPEN
+      $('#door-open').on('click', function() {
+        const $status = $('#door-status');
+        const $doorValue = $('#door-value'); // Door status widget
+
+        // Update UI for door open
+        $status
+          .text('Open')
+          .removeClass('bg-secondary')
+          .addClass('bg-success');
+        $doorValue.text('Open'); // Update the door status widget
+        $('#door-open').prop('disabled', true);
+        $('#door-close').prop('disabled', false);
+
+        // Display SweetAlert
+        Swal.fire({
+          icon: 'success',
+          title: 'Door is now Open',
+          text: 'The chicken door has been opened.',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      });
+
+      // DOOR CLOSE
+      $('#door-close').on('click', function() {
+        const $status = $('#door-status');
+        const $doorValue = $('#door-value'); // Door status widget
+
+        // Update UI for door close
+        $status
+          .text('Closed')
+          .removeClass('bg-success')
+          .addClass('bg-secondary');
+        $doorValue.text('Closed'); // Update the door status widget
+        $('#door-close').prop('disabled', true);
+        $('#door-open').prop('disabled', false);
+
+        // Display SweetAlert
+        Swal.fire({
+          icon: 'info',
+          title: 'Door is now Closed',
+          text: 'The chicken door has been closed.',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      });
+
+      // CAMERA-FEED REFRESH
+      $('#camera-feed').on('click', function() {
+        const $img = $(this);
+        const base = $img.data('base') || $img.attr('src').split('?')[0];
+        $img.data('base', base);
+        $img.attr('src', base + '?' + new Date().getTime());
+      });
+
+      // Simulate feeder level updates
+      let feederLevel = 100;
+
+      setInterval(() => {
+        feederLevel = Math.max(0, feederLevel - 10); // Decrease feeder level by 10% every interval
+        updateFeederLevel(feederLevel);
+      }, 5000); // Update every 5 seconds
     });
-  // ——— NAV: Coop Dashboard ———
-$('#nav-dashboard').on('click', function(e) {
-  e.preventDefault();        // prevent the default link behavior
-  showView('landing-view');  // jump to your “Welcome to Your Smart Chicken Coop” view
-});
-  });
-  
   </script>
-  
 </body>
 </html>
